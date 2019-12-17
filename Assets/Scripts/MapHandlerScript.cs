@@ -48,7 +48,6 @@ public class MapHandlerScript : MonoBehaviour
         }
         StartCoroutine(LoadTile(centerTileX, centerTileY, Tile22));
         
-        
     }
 
 
@@ -75,6 +74,8 @@ public class MapHandlerScript : MonoBehaviour
     IEnumerator LoadTile(int x, int y, GameObject quadTile)
     {
         Debug.Log("loadTileX" + x + "-" + y);
+        int originalX = x;
+        int originalY = y;
         string uri = "https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png";
 
         //CustomCertificateHandler certHandler = new CustomCertificateHandler();
@@ -95,7 +96,7 @@ public class MapHandlerScript : MonoBehaviour
             Tile22.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
         }
 
-        x++;
+        x = originalX + 1;
         www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png");
         //www.certificateHandler = certHandler;
 
@@ -113,7 +114,7 @@ public class MapHandlerScript : MonoBehaviour
             Tile23.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
         }
 
-        x++;
+        x = originalX - 1;
         www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png");
         //www.certificateHandler = certHandler;
 
@@ -128,14 +129,113 @@ public class MapHandlerScript : MonoBehaviour
         else
         {
             Debug.Log("Received");
-            Tile23.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+            Tile21.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
         }
-    }
 
-    public Array TilesPosition(String tilename)
-    {
-        //int x = tilename.TrimStart(4);
-        return null;
+        y = originalY - 1;
+        x = originalX - 1;
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile11.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+
+        y = originalY - 1;
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + originalX + "/" + y + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile12.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + (originalX + 1) + "/" + (originalY - 1) + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile13.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+        y = originalY + 1;
+        x = originalX + 1;
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile33.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + originalX + "/" + (originalY + 1) + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile32.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+        x = originalX - 1;
+        y = originalY + 1;
+        www = UnityWebRequestTexture.GetTexture("https://a.tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png");
+        //www.certificateHandler = certHandler;
+
+        // Enviar petició i esperem resposta
+        yield return www.SendWebRequest();
+
+        Debug.Log("server");
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Received");
+            Tile31.GetComponent<MeshRenderer>().material.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
     }
 
 

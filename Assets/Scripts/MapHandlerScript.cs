@@ -279,4 +279,5 @@ public class MapHandlerScript : MonoBehaviour
         user.SendMessage("MapLocation");
         StartCoroutine(LoadTile(centerTileX, centerTileY, Tile22));
     }
+
 }

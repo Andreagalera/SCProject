@@ -12,17 +12,22 @@ public class PoiScript : MonoBehaviour
     public double lonObject;
     [SerializeField]
     public string textDescription;
+    [SerializeField]
+    public string nameStationNear;
 
 
     bool located;
 
     // Busca l'objecte que es diu description
     GameObject description;
+    GameObject nearStation;
 
     // Start is called before the first frame update
     void Start()
     {
         description = GameObject.Find("Description");
+        nearStation = GameObject.Find("NearStation");
+        nearStation.GetComponent<Text>().text = nameStationNear;
         located = false;
         if (this.gameObject.tag == "poiUser")
         {
@@ -33,7 +38,7 @@ public class PoiScript : MonoBehaviour
 
     IEnumerator UpdateLocation()
     {
-        for (; ; )
+        for (; ;)
         {
             yield return new WaitForSeconds(3);
             MapLocation();
@@ -58,7 +63,7 @@ public class PoiScript : MonoBehaviour
         int y = MapHandlerScript.centerTileY;
         int zoom = MapHandlerScript.zoom;
         double a, b;
-        if (this.gameObject.tag== "poiUser")
+        if (this.gameObject.tag == "poiUser")
         {
             // a = DrawCubeX(Input.location.lastData.longitude, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
             // b = DrawCubeY(Input.location.lastData.latitude, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);

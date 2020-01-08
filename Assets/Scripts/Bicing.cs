@@ -8,6 +8,8 @@ public class Bicing : MonoBehaviour
 {
     public GameObject Poi;
     GameObject description;
+    GameObject nameStationNear;
+    JObject nearStation = null;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +17,7 @@ public class Bicing : MonoBehaviour
         // Empezamos prerutina
         StartCoroutine("Bici");
         description = GameObject.Find("Description");
-
+        nameStationNear = GameObject.Find("nameStationNear");
 
     }
 
@@ -23,6 +25,7 @@ public class Bicing : MonoBehaviour
     {
         StartCoroutine("Bici");
         description = GameObject.Find("Description");
+        nameStationNear = GameObject.Find("nameStationNear");
     }
 
 
@@ -51,6 +54,8 @@ public class Bicing : MonoBehaviour
         Debug.Log("MAPA" + stationPoint2["lat"].ToString());
         MapHandlerScript.lat = (float)stationPoint2["lat"];
         MapHandlerScript.lon = (float)stationPoint2["lon"];
+        double diffLat = 100;
+        double diffLon = 100;
         for (var i = 0; i < stationsInfo.Count; i++)
         {
             JObject stationPoint = (JObject)stationsInfo.GetItem(i);
@@ -61,6 +66,18 @@ public class Bicing : MonoBehaviour
             int bikesAvailable = (int)stations[i]["num_bikes_available"];
             Debug.Log("Charge Bicing info lat: " + lat.ToString() + ", lon:" + lon.ToString() + ", bikes:" + bikesAvailable.ToString());
 
+           /* if(diffLat > System.Math.Abs(Input.location.lastData.latitude - lat) && diffLon > System.Math.Abs(Input.location.lastData.longitude - lon))
+            {
+                diffLat = System.Math.Abs(Input.location.lastData.latitude - lat);
+                diffLon = System.Math.Abs(Input.location.lastData.longitude - lon);
+            }*/
+
+            if (diffLat > System.Math.Abs(41.4 - lat) && diffLon > System.Math.Abs(2.17 - lon))
+            {
+                diffLat = System.Math.Abs(41.4 - lat);
+                diffLon = System.Math.Abs(2.17 - lon);
+                nearStation = stationPoint;
+            }
 
             // Creo un objecte "o" i li aplico longitud i latitud
             GameObject o = Instantiate(Poi);
@@ -77,7 +94,13 @@ public class Bicing : MonoBehaviour
             //description.GetComponent<Text>().text = bikesAvailable.ToString();
 
         }
+        Debug.Log("Near station, lat: " + diffLat.ToString() + ", lon:" + diffLon.ToString() + "station name:" + (string)nearStation["name"]);
 
+    }
 
+    public void NearMe()
+    {
+        GameObject o = Instantiate(Poi);
+        o.GetComponent<PoiScript>().nameStationNear = "Station street: " + (string)nearStation["name"];
     }
 }

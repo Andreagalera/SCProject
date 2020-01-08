@@ -254,6 +254,8 @@ public class MapHandlerScript : MonoBehaviour
         {
             o.SendMessage("MapLocation");
         }
+        GameObject user = GameObject.FindGameObjectWithTag("poiUser");
+        user.SendMessage("MapLocation");
         StartCoroutine(LoadTile(centerTileX, centerTileY, Tile22));
     }
 
@@ -272,6 +274,9 @@ public class MapHandlerScript : MonoBehaviour
         {
             o.SendMessage("MapLocation");
         }
+
+        GameObject user = GameObject.FindGameObjectWithTag("poiUser");
+        user.SendMessage("MapLocation");
         StartCoroutine(LoadTile(centerTileX, centerTileY, Tile22));
     }
 }

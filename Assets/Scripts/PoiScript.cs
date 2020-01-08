@@ -13,6 +13,7 @@ public class PoiScript : MonoBehaviour
     [SerializeField]
     public string textDescription;
 
+
     bool located;
 
     // Busca l'objecte que es diu description
@@ -23,7 +24,20 @@ public class PoiScript : MonoBehaviour
     {
         description = GameObject.Find("Description");
         located = false;
+        if (this.gameObject.tag == "poiUser")
+        {
+            StartCoroutine("UpdateLocation");
+        }
 
+    }
+
+    IEnumerator UpdateLocation()
+    {
+        for (; ; )
+        {
+            yield return new WaitForSeconds(3);
+            MapLocation();
+        }
     }
     private void Update()
     {
@@ -43,9 +57,21 @@ public class PoiScript : MonoBehaviour
         int x = MapHandlerScript.centerTileX;
         int y = MapHandlerScript.centerTileY;
         int zoom = MapHandlerScript.zoom;
+        double a, b;
+        if (this.gameObject.tag== "poiUser")
+        {
+            // a = DrawCubeX(Input.location.lastData.longitude, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            // b = DrawCubeY(Input.location.lastData.latitude, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+            a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+        }
+        else
+        {
+            a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+        }
+        
 
-        double a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
-        double b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
 
         Debug.Log(" Pos" + a + "/" + b);
         // Si l'escala és 1 és 0.5, si fos 2 seria 1
@@ -104,6 +130,7 @@ public class PoiScript : MonoBehaviour
         GameObject[] poiList = GameObject.FindGameObjectsWithTag("poi");
         foreach (GameObject o in poiList)
         {
+      
             o.SendMessage("SetUnpressedColor");
         }
         this.GetComponent<MeshRenderer>().material.color = Color.blue;

@@ -16,6 +16,13 @@ public class Bicing : MonoBehaviour
         StartCoroutine("Bici");
         description = GameObject.Find("Description");
 
+
+    }
+
+    public void refreshInfo()
+    {
+        StartCoroutine("Bici");
+        description = GameObject.Find("Description");
     }
 
 

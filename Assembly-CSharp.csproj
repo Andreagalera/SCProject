@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Bicing.cs" />
     <Compile Include="Assets\Scripts\GeoLocationScript.cs" />
     <Compile Include="Assets\Scripts\GpsScript.cs" />
+    <Compile Include="Assets\Scripts\InitScript.cs" />
     <Compile Include="Assets\Scripts\MapHandlerScript.cs" />
     <Compile Include="Assets\Scripts\PoiScript.cs" />
     <Compile Include="Assets\UnityPackages\JsonNetSample\JsonNetSample.cs" />

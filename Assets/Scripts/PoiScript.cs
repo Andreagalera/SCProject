@@ -14,6 +14,8 @@ public class PoiScript : MonoBehaviour
     public string textDescription;
     [SerializeField]
     public string nameStationNear;
+    [SerializeField]
+    public string GPSPointName;
 
 
     bool located;
@@ -21,13 +23,16 @@ public class PoiScript : MonoBehaviour
     // Busca l'objecte que es diu description
     GameObject description;
     GameObject nearStation;
+    GameObject GPSPoint;
 
     // Start is called before the first frame update
     void Start()
     {
         description = GameObject.Find("Description");
         nearStation = GameObject.Find("NearStation");
+        GPSPoint = GameObject.Find("GPSPoint");
         nearStation.GetComponent<Text>().text = nameStationNear;
+        GPSPoint.GetComponent<Text>().text = GPSPointName;
         located = false;
         if (this.gameObject.tag == "poiUser")
         {
@@ -65,13 +70,17 @@ public class PoiScript : MonoBehaviour
         double a, b;
         if (this.gameObject.tag == "poiUser")
         {
-            // a = DrawCubeX(Input.location.lastData.longitude, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
-            // b = DrawCubeY(Input.location.lastData.latitude, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
-            a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
-            b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+            Input.location.Start();
+            a = DrawCubeX(Input.location.lastData.longitude, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            b = DrawCubeY(Input.location.lastData.latitude, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+            // a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            // b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
+            
         }
         else
         {
+            //a = DrawCubeX(Input.location.lastData.longitude, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
+            //b = DrawCubeY(Input.location.lastData.latitude, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
             a = DrawCubeX(lonObject, TileToWorldPos(x, y, zoom).X, TileToWorldPos(x + 1, y, zoom).X);
             b = DrawCubeY(latObject, TileToWorldPos(x, y + 1, zoom).Y, TileToWorldPos(x, y, zoom).Y);
         }
@@ -79,6 +88,7 @@ public class PoiScript : MonoBehaviour
 
 
         Debug.Log(" Pos" + a + "/" + b);
+        Debug.Log(" Pos" + Input.location.lastData.longitude + "/" + Input.location.lastData.latitude);
         // Si l'escala és 1 és 0.5, si fos 2 seria 1
         this.transform.position = new Vector3((float)a - 0.5f, (float)b - 0.5f, 0.0f);
     }

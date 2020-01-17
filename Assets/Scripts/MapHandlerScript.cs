@@ -37,7 +37,8 @@ public class MapHandlerScript : MonoBehaviour
         
         zoom = 15;
         // GPS 
-        WorldToTilePos(2.17706f, 41.39553f, zoom);
+        // WorldToTilePos(2.155424f, 41.381170f, zoom);
+        WorldToTilePos(Input.location.lastData.longitude, Input.location.lastData.latitude, zoom);
 
         // Faig una llista de tots els objectes que tenen el tag poi, per enviar un missatge de la localització
         GameObject[] poiList = GameObject.FindGameObjectsWithTag("poi");
@@ -49,7 +50,6 @@ public class MapHandlerScript : MonoBehaviour
         StartCoroutine(LoadTile(centerTileX, centerTileY, Tile22));
         
     }
-
 
     public void DownLoadCenterMapTileGps()
     {
@@ -244,7 +244,8 @@ public class MapHandlerScript : MonoBehaviour
         zoom++;
         if (zoom > 18)
             zoom = 18;
-        WorldToTilePos(2.17706f, 41.39553f, zoom);
+        // WorldToTilePos(2.17706f, 41.39553f, zoom);
+        WorldToTilePos(Input.location.lastData.longitude, Input.location.lastData.latitude, zoom);
         Debug.Log("ZOOM: " + zoom);
 
         // Faig una llista de tots els objectes que tenen el tag poi, per enviar un missatge de la localització
@@ -264,7 +265,8 @@ public class MapHandlerScript : MonoBehaviour
         zoom--;
         if (zoom < 10)
             zoom = 10;
-        WorldToTilePos(2.17706f, 41.39553f, zoom);
+        // WorldToTilePos(2.17706f, 41.39553f, zoom);
+        WorldToTilePos(Input.location.lastData.longitude, Input.location.lastData.latitude, zoom);
         Debug.Log("ZOOM: " + zoom);
 
         // Faig una llista de tots els objectes que tenen el tag poi, per enviar un missatge de la localització

@@ -40,6 +40,7 @@ public class GpsScript : MonoBehaviour
         }
         else
         {
+            Input.compass.enabled = true;
             // GameObject o = GameObject.Find("MapHandler");
             // o.SendMessage("DownloadCenterMapTileGps");
             // Access granted and location value could be retrieved
@@ -47,7 +48,7 @@ public class GpsScript : MonoBehaviour
         }
 
         // Stop service if there is no need to query location updates continuously
-        //Input.location.Stop();
+        // Input.location.Stop();
     }
 
     // Update is called once per frame

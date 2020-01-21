@@ -18,6 +18,7 @@ public class Bicing : MonoBehaviour
     void Start()
     {
         // Empezamos prerutina
+
         StartCoroutine("Bici");
         description = GameObject.Find("Description");
         nameStationNear = GameObject.Find("nameStationNear");
@@ -61,7 +62,7 @@ public class Bicing : MonoBehaviour
             JObject stationPoint = (JObject)stationsInfo.GetItem(i);
             float lat = (float)stationPoint["lat"];
             float lon = (float)stationPoint["lon"];
-            nearStation = stationPoint;
+            // nearStation = stationPoint;
 
             int bikesAvailable = (int)stations[i]["num_bikes_available"];
             Debug.Log("Charge Bicing info lat: " + lat.ToString() + ", lon:" + lon.ToString() + ", bikes:" + bikesAvailable.ToString());
@@ -70,7 +71,8 @@ public class Bicing : MonoBehaviour
             {
                 diffLat = System.Math.Abs(Input.location.lastData.latitude - lat);
                 diffLon = System.Math.Abs(Input.location.lastData.longitude - lon);
-                
+                nearStation = stationPoint;
+
             }
             
 
